@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [arr, setArr] = useState([
+    {
+      id: 1,
+      title: "react를 배워봅시다",
+    },
+  ]);
+  const [title, setTitle] = useState("");
+
+  const writeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const addList = () => {
+    if (title) {
+      const newTitle = {
+        id: arr[arr.indexOf(arr[arr.length - 1])].id + 1,
+        title: title,
+      };
+      setArr([...arr, newTitle]);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="inputBox">
+        <input type="text" onChange={writeTitle} value={title} />
+        <button onClick={addList}>추가하기</button>
+      </div>
+      <ul>
+        {arr.map((list) => (
+          <li key={list.id}>
+            <div>{list.title}</div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
